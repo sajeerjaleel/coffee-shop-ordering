@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
 	def create
 		@order = Order.new(order_params)
 		@order.save
-		Billing::BillingService.new(@order).create_bill
+		Services::BillingService.new(@order).create_bill
 		redirect_to order_path(@order.id)
 	end
 
