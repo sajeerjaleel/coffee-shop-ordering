@@ -3,13 +3,15 @@ module Calculators
 	# To calculate ooofer discounts and price of a particular item in an order
 	##########################################################################
 	class OfferCalculator
-		attr_reader :offer_counts
+		attr_reader :offer_counts, :offer_class, :offer_item_class
 
-		def initialize(order_item, offer_counts)
+		def initialize(order_item, offer_counts, offer_class: Offer, offer_item_class: OfferItem)
 			@order_item = order_item
 			@offer_counts = offer_counts
 			@total_discount = 0
 			@total_price = 0
+			@offer_class = offer_class
+			@offer_item_class = offer_item_class
 			calculate_discounts_and_price
 		end
 
@@ -22,7 +24,7 @@ module Calculators
 		end
 
 		def offers_applied
-			Offer.where(id: offer_ids).pluck(:name).join(", ")
+			offer_class.where(id: offer_ids).pluck(:name).join(", ")
 		end
 
 		private
@@ -40,7 +42,7 @@ module Calculators
 		end
 
 		def offer_item(offer_id)
-			@offer_item ||= OfferItem.where(offer_id: offer_id, item_id: item.id).first
+			@offer_item ||= offer_item_class.where(offer_id: offer_id, item_id: item.id).first
 		end
 
 		def calculate_discounts_and_price
