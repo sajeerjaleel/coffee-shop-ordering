@@ -16,5 +16,7 @@ module CoffeeShopApp
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/app/services)
+
+    config.assets.initialize_on_precompile = false
   end
 end
