@@ -1,0 +1,40 @@
+<div class="container">
+
+	<h2> New Order</h2>
+
+	<hr>
+	<%= form_for(@order) do |f| %>
+		<table class="table table-dark">
+			<thead>
+				<tr>
+					<th scope="col">Item</th>
+					<th scope="col">Price</th>
+					<th scope="col">Quantity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @categories.each do |category| %>
+					<tr class="table-warning">
+						<th><%= category.name %></th>
+						<td></td>
+						<td></td>
+					</tr>
+					<% category.items.each do |item| %>
+						<tr>
+							<td><%= item.name %></td>
+							<td>$ <%= item.price %></td>
+							<%= f.fields_for :order_items do |order_item| %>
+								<%= order_item.hidden_field :item_id, value: item.id %>
+								<td><%= order_item.number_field :quantity, min: 0 %></td>
+							<% end %>
+						</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+
+		<hr/>
+		<%= f.submit "Review Order", class: "btn btn-primary" %>
+	<% end %>
+
+</div>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>RubyCritic</title>
+    <link href="../assets/stylesheets/application.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <link href="../assets/stylesheets/prettify.custom_theme.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header class="project-header group">
+      <div class="container">
+        <h1 class="logo"><a href="../overview.html" class="logo-link">RubyCritic</a></h1>
+        <nav class="project-nav">
+          <a href="../overview.html" class="project-nav-item">Overview</a>
+          <a href="../code_index.html" class="project-nav-item">Code</a>
+          <a href="../smells_index.html" class="project-nav-item">Smells</a>
+        </nav>
+      </div>
+    </header>
+    <div class="container">
+      <div class="file-header group rated">
+  <span class="rating rating-a circled-text circle">
+    A
+  </span>
+  <h2 class="file-name">OfferItemsList</h2>
+
+  <span class="file-committed-at">
+    
+      Never committed
+    
+  </span>
+
+  <div class="file-stats group">
+    <div class="file-stat">
+      40 complexity
+    </div>
+    <div class="file-stat">
+      6.7 complexity per method
+    </div>
+    <div class="file-stat">
+      0 churn
+    </div>
+    <div class="file-stat">
+      6 methods
+    </div>
+    <div class="file-stat">
+      0 duplication
+    </div>
+  </div>
+
+  
+    <button id="js-toggle-smells" class="smells-toggle-button button">Toggle Smells</button>
+  
+</div>
+
+<code class="prettyprint linenums lang-ruby file-code js-file-code">#######################################################################
+# To get hash of total items count and offer counts of an order
+#######################################################################
+class OfferItemsList
+	attr_reader :order
+
+	def initialize(order)
+		@order = order
+		@item_count_hash = {}
+		@offer_count_hash = {}
+	end
+
+	def get_item_and_offer_counts		
+		set_item_count_hash
+		set_offer_count_hash
+		get_valid_offers_count
+		return @item_count_hash,@offer_count_hash
+	end
+
+	private
+
+	def active_offers<ul class="nocode smells js-smells">  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank">UtilityFunction</a>)      OfferItemsList#active_offers doesn't depend on instance state (maybe move it to another class?)          </span>  </li></ul>
+		Offer.active.order(:priority_order)
+	end
+
+	def set_item_count_hash
+		@order.order_items.each do |order_item|
+			@item_count_hash[order_item.item_id] = order_item.quantity
+		end
+	end
+
+	def set_offer_count_hash
+		active_offers.each do |offer|
+		 	@offer_count_hash[offer.id] = {item_ids: offer.offer_items.pluck(:item_id), count: 0}
+		end
+	end
+
+	def get_valid_offers_count
+		@offer_count_hash.each do |key, value|
+			@offer_count_hash[key][:count] = value[:item_ids].map {|i| @item_count_hash[i] || 0 }.min<ul class="nocode smells js-smells">  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank">DuplicateMethodCall</a>)      OfferItemsList#get_valid_offers_count calls @offer_count_hash[key] 3 times                        <a href="offer_items_list.html#L40" class="js-smell-location">0</a>                  <a href="offer_items_list.html#L41" class="js-smell-location">1</a>                  <a href="offer_items_list.html#L42" class="js-smell-location">2</a>                  </span>  </li>  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank">UncommunicativeVariableName</a>)      OfferItemsList#get_valid_offers_count has the variable name 'i'          </span>  </li></ul>
+			@offer_count_hash[key][:item_ids].each do |item_id|<ul class="nocode smells js-smells">  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank">DuplicateMethodCall</a>)      OfferItemsList#get_valid_offers_count calls @offer_count_hash[key] 3 times                        <a href="offer_items_list.html#L40" class="js-smell-location">0</a>                  <a href="offer_items_list.html#L41" class="js-smell-location">1</a>                  <a href="offer_items_list.html#L42" class="js-smell-location">2</a>                  </span>  </li>  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Nested-Iterators.md" target="_blank">NestedIterators</a>)      OfferItemsList#get_valid_offers_count contains iterators nested 2 deep          </span>  </li></ul>
+				@item_count_hash[item_id] = (@item_count_hash[item_id] - @offer_count_hash[key][:count]) if @item_count_hash[item_id]<ul class="nocode smells js-smells">  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank">DuplicateMethodCall</a>)      OfferItemsList#get_valid_offers_count calls @item_count_hash[item_id] 2 times          </span>  </li>  <li class="smell ">    <span class="description">      (<a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank">DuplicateMethodCall</a>)      OfferItemsList#get_valid_offers_count calls @offer_count_hash[key] 3 times                        <a href="offer_items_list.html#L40" class="js-smell-location">0</a>                  <a href="offer_items_list.html#L41" class="js-smell-location">1</a>                  <a href="offer_items_list.html#L42" class="js-smell-location">2</a>                  </span>  </li></ul>
+			end
+		end
+	end
+end
+</code>
+
+    </div>
+    <script src='../assets/javascripts/jquery-2.1.0.js'></script>
+    <script src='../assets/javascripts/jquery.tablesorter.js'></script>
+    <script src='../assets/javascripts/jquery.floatThead-v1.2.7.js'></script>
+    <script src='../assets/javascripts/jquery.timeago-v1.4.1.js'></script>
+    <script src='../assets/javascripts/highcharts.src-4.0.1.js'></script>
+    <script src='../assets/javascripts/jquery.scrollTo-1.4.11.js'></script>
+    <script src='../assets/javascripts/prettify-4-Mar-2013.js'></script>
+    <script src='../assets/javascripts/application.js'></script>
+  </body>
+</html>

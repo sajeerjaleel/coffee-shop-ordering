@@ -1,0 +1,26 @@
+db_config: &db_config
+  adapter: mysql2
+  host: 127.0.0.1
+  strict: true
+  port: 3306
+
+# Set login credentials
+login: &login
+  username: root
+  password: sajeer_202
+
+production:
+  <<: *db_config
+  <<: *login
+  database: coffee_shop
+
+development:
+  <<: *db_config
+  <<: *login
+  database: coffee_shop_develop
+  strict: false
+
+test:
+  <<: *db_config
+  <<: *login
+  database: coffee_shop_test

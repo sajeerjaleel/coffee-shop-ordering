@@ -1,0 +1,9 @@
+<div class="container">
+	<h1 class="display-3">Thank you for the Order</h1>
+	<h1 class="display-6">Your order will be ready soon</h1>
+
+	<p>Total paid $ <%= @order.total_amount %></p>
+	<p>You saved $ <%= @order.total_discount %></p>
+
+	<p><%= link_to "New Order", new_order_path, :class => "btn btn-primary" %></p>
+</div>

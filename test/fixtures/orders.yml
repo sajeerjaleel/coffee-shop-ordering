@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: 1
+  completed_at: 2021-07-10 22:07:11
+  total_items: 1
+  discount: 1.5
+  tax: 1.5
+  total_amount: 1.5
+
+two:
+  status: 1
+  completed_at: 2021-07-10 22:07:11
+  total_items: 1
+  discount: 1.5
+  tax: 1.5
+  total_amount: 1.5
