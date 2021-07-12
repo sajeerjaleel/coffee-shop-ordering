@@ -2,8 +2,10 @@
 
 Expected scenario:
 * The barista takes order from customer.
-* All items are listed divided in to categories.
-* All the items needed are added.
+* All items are listed divided into categories.
+* All the items needed can be added using a numeric field.
+  
+* Offers Items are added in OfferItem table with discount rate defined for each product.
 * If the item is included in any combo offer, the offer price is applied to each item defined in the offer.
 * A confirm order page is shown with all applied offer, discount and tax rate.
 * The barista can either confirm or delete the order.
