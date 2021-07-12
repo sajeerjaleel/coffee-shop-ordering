@@ -1,8 +1,8 @@
 require 'unit/test_helper'
-require 'order_billing'
+require 'billing/order_billing'
 
-describe OrderBilling do
-  let(:described_class) { OrderBilling }
+describe Billing::OrderBilling do
+  let(:described_class) { Billing::OrderBilling }
   let(:total_discount) { MiniTest::Mock.new }
   let(:total_tax) { MiniTest::Mock.new }
   let(:total_price) { MiniTest::Mock.new }
