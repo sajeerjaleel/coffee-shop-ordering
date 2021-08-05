@@ -14,15 +14,15 @@
 	    	</tr>
 	  	</thead>
 	  	<tbody>
-	  		<% @order_items.each do |order_item| %>
+	  		<% @invoice_items.each do |invoice_item| %>
 		  		<tr>
-			  		<td><%= order_item.item.name %></td>
-				    <td>$ <%= order_item.item.price %></td>
-		      		<td><%= order_item.quantity %></td>
-		      		<td><%= order_item.offers_applied %></td>
-		     		<td>$ <%= order_item.total_tax %></td>
-		     		<td>$ <%= order_item.total_discount %></td>
-		     		<td>$ <%= order_item.total_price %></td>
+			  		<td><%= invoice_item.item.name %></td>
+				    <td>$ <%= invoice_item.item.price %></td>
+		      		<td><%= invoice_item.quantity %></td>
+		      		<td><%= invoice_item.offers_applied %></td>
+		     		<td>$ <%= invoice_item.total_tax %></td>
+		     		<td>$ <%= invoice_item.total_discount %></td>
+		     		<td>$ <%= invoice_item.total_price %></td>
 		     	</tr>
 		    <% end %>
 		    <tr class="table-dark">
@@ -30,9 +30,9 @@
 		    	<td></td>
 		    	<td></td>
 		    	<td></td>
-		    	<td><%= @order.total_tax %></td>
-		    	<td><%= @order.total_discount %></td>
-		    	<td><%= @order.total_amount %></td>
+		    	<td><%= @invoice.total_tax %></td>
+		    	<td><%= @invoice.total_discount %></td>
+		    	<td><%= @invoice.total_amount %></td>
 		    </tr>
 	  	</tbody>
 	</table>
@@ -43,7 +43,7 @@
 			<%= link_to "Delete Order", order_path(@order.id), :method => 'delete', :class => "btn btn-danger" %>
 		</div>
 		<div class="col-sm-2">
-			<%= link_to "Sumbit Order", complete_order_path(@order.id), :class => "btn btn-success" %>
+			<%= link_to "Complete Payment", complete_order_path(@order.id), :class => "btn btn-success" %>
 		</div>
 	</div>
 </div>

@@ -33,7 +33,7 @@ module Calculators
 
 		def set_offer_count_hash
 			active_offers.each do |offer|
-			 	@offer_count_hash[offer.id] = {item_ids: offer.offer_items.pluck(:item_id), count: 0}
+			 	@offer_count_hash[offer.id] = { item_ids: offer.offer_items.pluck(:item_id), count: 0 }
 			end
 		end
 

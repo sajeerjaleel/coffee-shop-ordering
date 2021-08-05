@@ -10,12 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210710164534) do
+ActiveRecord::Schema.define(version: 20210805084500) do
 
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "invoice_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "invoice_id"
+    t.bigint "item_id"
+    t.integer "quantity"
+    t.decimal "total_price", precision: 8, scale: 2
+    t.decimal "total_tax", precision: 8, scale: 2
+    t.decimal "total_discount", precision: 8, scale: 2
+    t.text "offers_applied"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id"
+    t.index ["item_id"], name: "index_invoice_items_on_item_id"
+  end
+
+  create_table "invoices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "order_id"
+    t.integer "status", default: 0
+    t.datetime "time"
+    t.integer "total_items"
+    t.decimal "total_discount", precision: 8, scale: 2
+    t.decimal "total_tax", precision: 8, scale: 2
+    t.decimal "total_amount", precision: 8, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_invoices_on_order_id"
   end
 
   create_table "items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -55,10 +82,6 @@ ActiveRecord::Schema.define(version: 20210710164534) do
     t.bigint "order_id"
     t.bigint "item_id"
     t.integer "quantity"
-    t.decimal "total_price", precision: 8, scale: 2
-    t.decimal "total_tax", precision: 8, scale: 2
-    t.decimal "total_discount", precision: 8, scale: 2
-    t.text "offers_applied"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_order_items_on_item_id"
@@ -69,9 +92,6 @@ ActiveRecord::Schema.define(version: 20210710164534) do
     t.integer "status", default: 0
     t.datetime "completed_at"
     t.integer "total_items"
-    t.decimal "total_discount", precision: 8, scale: 2
-    t.decimal "total_tax", precision: 8, scale: 2
-    t.decimal "total_amount", precision: 8, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

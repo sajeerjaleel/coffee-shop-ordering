@@ -1,7 +1,7 @@
 module Services
 	##########################################################
     # To handle billing of an order
-    ##########################################################
+  ##########################################################
 	class BillingService
 		attr_reader :order
 
@@ -10,11 +10,14 @@ module Services
 		end
 
 		def create_bill
-			item_count_hash, offer_count_hash = Calculators::OfferItemsList.new(order).get_item_and_offer_counts						
+			item_count_hash, offer_count_hash = Calculators::OfferItemsList.new(order).get_item_and_offer_counts
+
 			order.order_items.each do |order_item|
-				Billing::ItemBilling.new(order_item, item_count_hash, offer_count_hash).update_bill
+				Billing::InvoiceItemBilling.new(order_item, item_count_hash, offer_count_hash).create_invoice_item
 			end
-			Billing::OrderBilling.new(order).update_bill
+			Billing::InvoiceBilling.new(order.invoice).update_bill
 		end
-  	end
+
+  end
+
 end

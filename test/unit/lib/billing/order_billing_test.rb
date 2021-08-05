@@ -1,8 +1,8 @@
 require 'unit/test_helper'
-require 'billing/order_billing'
+require 'billing/invoice_billing'
 
-describe Billing::OrderBilling do
-  let(:described_class) { Billing::OrderBilling }
+describe Billing::InvoiceBilling do
+  let(:described_class) { Billing::InvoiceBilling }
   let(:total_discount) { MiniTest::Mock.new }
   let(:total_tax) { MiniTest::Mock.new }
   let(:total_price) { MiniTest::Mock.new }
@@ -17,7 +17,7 @@ describe Billing::OrderBilling do
 
     def mock_order
       mock = MiniTest::Mock.new
-      3.times{ mock.expect(:order_items, mock) }
+      3.times{ mock.expect(:invoice_items, mock) }
       mock.expect(:sum, total_discount, [:total_discount])
       mock.expect(:sum, total_tax, [:total_tax])
       mock.expect(:sum, total_price, [:total_price])

@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
 	before_action :sanitize_params, :only => [:create]
-	before_action :set_order, :only => [:show, :destroy, :complete]
+	before_action :set_order_and_invoice, :only => [:show, :destroy, :complete]
 
 	def new
 		@categories = Category.all.includes(:items)
@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
 	end
 
 	def show
-		@order_items = @order.order_items.includes(:item)
+		@invoice_items = @order.invoice.invoice_items.includes(:item)
 	end
 
 	def destroy
@@ -32,14 +32,15 @@ class OrdersController < ApplicationController
 	private
 
 	def order_params
-        params.require(:order).permit(order_items_attributes: [:item_id, :quantity])
-    end
+		params.require(:order).permit(order_items_attributes: [:item_id, :quantity])
+	end
 
-    def sanitize_params
-    	params[:order][:order_items_attributes].delete_if{ |k,v| v[:quantity].blank? }
-    end
+	def sanitize_params
+		params[:order][:order_items_attributes].delete_if{ |k,v| v[:quantity].blank? }
+	end
 
-    def set_order
-    	@order = Order.find_by_id(params[:id])
-    end
+	def set_order_and_invoice
+		@order = Order.find_by_id(params[:id])
+		@invoice = @order.invoice
+	end
 end
